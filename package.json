@@ -1,0 +1,39 @@
+{
+  "name": "el-table-fixed-header",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Fixed element table header when scrolling",
+  "main": "dist/el-table-fixed-header.min.js",
+  "scripts": {
+    "lint": "eslint src",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Yuliang-Lee/el-table-fixed-header.git"
+  },
+  "keywords": [
+    "vue",
+    "element",
+    "table",
+    "fixed",
+    "header"
+  ],
+  "author": "xlaoyu <frank_yll@163.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yuliang-Lee/el-table-fixed-header/issues"
+  },
+  "homepage": "https://github.com/Yuliang-Lee/el-table-fixed-header#readme",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}

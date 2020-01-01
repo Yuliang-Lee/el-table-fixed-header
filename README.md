@@ -10,6 +10,11 @@
 
 - Fixed element's table header when scrolling
 
+## dependencies
+
+- [vue@2.x](https://vuejs.org/)
+- [ElementUI@2.x](https://element.eleme.io/)
+
 ## Instalation
 
 ### Using module bundlers
@@ -19,7 +24,7 @@ npm install --save el-table-fixed-header
 ```
 
 ``` javascript
-// import on your project (less then 1KB gziped)
+// import on your project
 import ElTableFixedHeader from 'el-table-fixed-header'
 Vue.use(ElTableFixedHeader)
 ```
@@ -34,9 +39,9 @@ Vue.use(ElTableFixedHeader)
     </div>
   </div>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue2-smooth-scroll"></script>
+  <script src="https://unpkg.com/el-table-fixed-header"></script>
   <script>
-  Vue.use(ElTableFixedHeader);
+  Vue.use(ElTableFixedHeader.default);
   var app = new Vue({
     el: '#app',
     data: {
@@ -50,7 +55,7 @@ Vue.use(ElTableFixedHeader)
 ## Usage
 ``` html
 <div id="wrapper-id">
-  <el-table v-fixed-bottom-header="{startFixed: 230, container: '#wrapper-id'}"></el-table>
+  <el-table v-fixed-header="{startFixed: 230, container: '#wrapper-id'}"></el-table>
 </div>
 ```
 
@@ -62,6 +67,12 @@ Vue.use(ElTableFixedHeader)
     container: '', // default is window, the scroll container, use document.querySelector to query the Element
   }
 ```
+
+## Demo
+
+[Code](https://codepen.io/Yuliang-Lee/pen/bGNoMzy)
+![fixed-header_2](https://user-images.githubusercontent.com/6936358/71640623-7ec2d300-2cc8-11ea-861f-a16f372519bb.gif)
+
 
 ## License
 

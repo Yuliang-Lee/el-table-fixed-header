@@ -53,7 +53,6 @@ export default function install(Vue) {
       }
 
       const onScroll = () => {
-        console.log('scroll')
         const pos = el.getBoundingClientRect()
 
         if (pos.top - startFixed < 0) {
@@ -62,7 +61,7 @@ export default function install(Vue) {
           setFixed(headerWrapper, false)
         }
       }
-      console.log(container)
+
       container.addEventListener('scroll', onScroll)
 
       el[ElementTableCtx] = {

@@ -1,4 +1,4 @@
-# element table fixed bottom header directive
+# element table fixed header directive
 
 [![Vue 2.x](https://img.shields.io/badge/Vue-2.x-brightgreen.svg)](https://vuejs.org/v2/guide/)
 [![npm](https://img.shields.io/npm/v/el-table-fixed-header.svg)](https://www.npmjs.com/package/el-table-fixed-header)

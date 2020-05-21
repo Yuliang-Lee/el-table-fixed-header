@@ -3,33 +3,32 @@
  * @param {Number} 可接受一个数字类型参数,表示 table 上边框离浏览器窗口多少px开始fix头部,默认 0
  */
 const ElementTableCtx = Symbol('__ElementTableHeaderCtx')
+
 function setFixed(el, fixed, height) {
   if (fixed) {
-    el.style.position = 'relative'
-    el.style.top = height + 'px'
+    el.style.transform = `translateY(${height}px) translateZ(0)`
     el.style.zIndex = 100
   } else {
-    el.style.position = 'relative'
-    el.style.top = '0'
+    el.style.transform = `translateY(0) translateZ(0)`
     el.style.zIndex = 'inherit'
   }
 }
 function setFixedHeaderFixed(el, fixed, height) {
   if (fixed) {
-    el.style.top = height + 'px'
+    el.style.transform = `translateY(${height}px) translateZ(0)`
     el.style.zIndex = 100
   } else {
-    el.style.top = '0'
+    el.style.transform = `translateY(0) translateZ(0)`
     el.style.zIndex = 'inherit'
   }
 }
 function setFirstRowFixed(el, fixed, height = 0) {
   if (fixed) {
-    el.style.top = height + 'px'
+    el.style.transform = `translateY(${height}px) translateZ(0)`
     el.style.zIndex = 99
     el.style.borderBottom = '2px solid #e0e6ed'
   } else {
-    el.style.top = '0'
+    el.style.transform = `translateY(0) translateZ(0)`
     el.style.zIndex = 'inherit'
     el.style.borderBottom = '1px solid #e0e6ed'
   }
@@ -46,15 +45,17 @@ export default function install(Vue) {
 
       if (typeof container === 'string') {
         container = document.querySelector(container)
+        if (!container) throw Error('container not existed!!')
       }
 
       if (typeof startFixed !== 'number') {
         throw TypeError('fixed-header needs number value')
       }
 
+      headerWrapper.style.position = 'relative'
       const onScroll = () => {
         const pos = el.getBoundingClientRect()
-
+        console.log(pos.top)
         if (pos.top - startFixed < 0) {
           setFixed(headerWrapper, true, Math.abs(pos.top - startFixed))
         } else {
@@ -79,10 +80,10 @@ export default function install(Vue) {
       }
 
       setTimeout(() => {
-        const fixedHeaderWrappers = el.querySelectorAll('.el-table__fixed-header-wrapper')
-        const fixedRightHeaderWrappers = el.querySelectorAll('.el-table__fixed-right > .el-table__fixed-header-wrapper') // eslint-disable-line max-len
+        const fixedHeaderWrapper = el.querySelector('.el-table__fixed > .el-table__fixed-header-wrapper')
+        const fixedRightHeaderWrapper = el.querySelector('.el-table__fixed-right > .el-table__fixed-header-wrapper') // eslint-disable-line max-len
 
-        if (fixedHeaderWrappers.length || fixedRightHeaderWrappers.length) {
+        if (fixedHeaderWrapper || fixedRightHeaderWrapper) {
           el.querySelector('.el-table__fixed') && (el.querySelector('.el-table__fixed').style.zIndex = 100)
           el.querySelector('.el-table__fixed-right') && (el.querySelector('.el-table__fixed-right').style.zIndex = 101)
 
@@ -100,24 +101,13 @@ export default function install(Vue) {
               })
             }
 
-            Array.prototype.slice.call(fixedHeaderWrappers).forEach((fixedHeaderWrapper) => {
-              if (pos.top - startFixed < 0) {
-                el[ElementTableCtx].fixedHeaderFixed = true
-
-                setFixedHeaderFixed(fixedHeaderWrapper, true, Math.abs(pos.top - startFixed))
-              } else {
-                setFixedHeaderFixed(fixedHeaderWrapper, false)
-              }
-            })
-            Array.prototype.slice.call(fixedRightHeaderWrappers).forEach((fixedRightHeaderWrapper) => {
-              if (pos.top - startFixed < 0) {
-                el[ElementTableCtx].fixedHeaderFixed = true
-
-                setFixedHeaderFixed(fixedRightHeaderWrapper, true, Math.abs(pos.top - startFixed))
-              } else {
-                setFixedHeaderFixed(fixedRightHeaderWrapper, false)
-              }
-            })
+            if (pos.top - startFixed < 0) {
+              fixedHeaderWrapper && setFixedHeaderFixed(fixedHeaderWrapper, true, Math.abs(pos.top - startFixed))
+              fixedRightHeaderWrapper && setFixedHeaderFixed(fixedRightHeaderWrapper, true, Math.abs(pos.top - startFixed))
+            } else {
+              fixedHeaderWrapper && setFixedHeaderFixed(fixedHeaderWrapper, false)
+              fixedRightHeaderWrapper && setFixedHeaderFixed(fixedRightHeaderWrapper, false)
+            }
           }
 
           container.addEventListener('scroll', fixedScroll)
@@ -129,6 +119,8 @@ export default function install(Vue) {
       const { fixedScroll, onScroll, container } = el[ElementTableCtx]
       container.removeEventListener('scroll', onScroll)
       container.removeEventListener('scroll', fixedScroll)
+      el[ElementTableCtx].onScroll = null
+      el[ElementTableCtx].fixedScroll = null
       el[ElementTableCtx] = null
     }
   })

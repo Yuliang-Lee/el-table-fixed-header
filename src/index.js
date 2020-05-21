@@ -55,7 +55,7 @@ export default function install(Vue) {
       headerWrapper.style.position = 'relative'
       const onScroll = () => {
         const pos = el.getBoundingClientRect()
-        console.log(pos.top)
+
         if (pos.top - startFixed < 0) {
           setFixed(headerWrapper, true, Math.abs(pos.top - startFixed))
         } else {
